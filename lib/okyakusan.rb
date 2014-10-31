@@ -5,8 +5,8 @@ require "net/http"
 require "json"
 
 module Okyakusan
-  def self.start(base)
-    uri = URI(uri)
+  def self.start(base = "https://api.heroku.com")
+    uri = URI(base)
     Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
       client = Client.new(http)
       yield(client)
