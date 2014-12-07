@@ -21,6 +21,16 @@ RSpec.describe Okyakusan::Client do
       response = client.get("/apps/#{app}/env-vars")
       expect(response.code).to eq("200")
     end
+
+    it "should work on edge versions" do
+      response = client.get("/apps/#{app}/env-vars", version: "edge")
+      expect(response.code).to eq("200")
+    end
+
+    it "should break on v2 api" do
+      response = client.get("/apps/#{app}/env-vars", version: "2")
+      expect(response.code).to eq("500")
+    end
   end
 
   describe "#delete" do

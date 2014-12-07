@@ -7,11 +7,12 @@ class HerokuHeader
   end
 
   def call(env)
-    if env["HTTP_ACCEPT"] == "application/vnd.heroku+json; version=3" &&
+    md = env["HTTP_ACCEPT"].match(%r{application/vnd\.heroku\+json; version=(\w+)})
+    if %w(3 edge).include?(md[1]) &&
       env["CONTENT_TYPE"] == "application/json"
       @app.call(env)
     else
-      ["500", {"Content-Type" => "text/plain" }, ["Header Mismatch"]]
+      ["500", {"Content-Type" => "text/plain" }, ["Header Mismatch: #{md[1]}"]]
     end
   end
 end

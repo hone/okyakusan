@@ -12,31 +12,33 @@ module Okyakusan
     end
 
     %w(get delete).each do |method_name|
-      define_method(method_name) do |path|
+      define_method(method_name) do |path, version: false|
         klass   = Net::HTTP.const_get(method_name.capitalize)
         request = klass.new(path)
 
-        setup_request(request)
+        setup_request(request, version: version)
         @http.request(request)
       end
     end
 
     %w(post patch).each do |method_name|
-      define_method(method_name) do |path, data:|
+      define_method(method_name) do |path, data:, version: nil|
         klass   = Net::HTTP.const_get(method_name.capitalize)
         request = klass.new(path)
 
-        setup_request(request)
+        setup_request(request, version: version)
         request.body = data.to_json
         @http.request(request)
       end
     end
 
     private
-    def setup_request(request)
+    def setup_request(request, version:)
+      version ||= "3"
+
       request.basic_auth(@username, @password)
       request.content_type = "application/json"
-      request["Accept"]    = "application/vnd.heroku+json; version=3"
+      request["Accept"]    = "application/vnd.heroku+json; version=#{version}"
       request
     end
   end
