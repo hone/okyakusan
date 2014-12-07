@@ -22,12 +22,12 @@ module Okyakusan
     end
 
     %w(post patch).each do |method_name|
-      define_method(method_name) do |path, data:, version: nil|
+      define_method(method_name) do |path, data: nil, version: nil|
         klass   = Net::HTTP.const_get(method_name.capitalize)
         request = klass.new(path)
 
         setup_request(request, version: version)
-        request.body = data.to_json
+        request.body = data.to_json if data
         @http.request(request)
       end
     end

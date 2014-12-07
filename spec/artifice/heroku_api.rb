@@ -79,6 +79,17 @@ OUTPUT
 OUTPUT
   end
 
+  post "/apps/:app/sources" do
+    <<OUTPUT
+{
+  "source_blob": {
+    "get_url":"https://s3-external-1.amazonaws.com/herokusources/...",
+    "put_url":"https://s3-external-1.amazonaws.com/herokusources/..."
+  }
+}
+OUTPUT
+  end
+
   patch "/apps/:app/addons/:addon" do
     json = JSON.parse(request.body.read)
     <<OUTPUT

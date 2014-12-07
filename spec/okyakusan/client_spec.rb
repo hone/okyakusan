@@ -53,6 +53,11 @@ RSpec.describe Okyakusan::Client do
       response = client.post("/apps/#{app}/addons", data: data)
       expect(response.code).to eq("200")
     end
+
+    it "doesn't always need a data argmuent" do
+      response = client.post("/apps/#{app}/sources")
+      expect(response.code).to eq("200")
+    end
   end
 
   describe "#patch" do
