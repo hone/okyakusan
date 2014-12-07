@@ -1,3 +1,7 @@
+require "netrc"
+require "net/http"
+require "json"
+
 module Okyakusan
   class Client
     def initialize(http)

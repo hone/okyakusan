@@ -1,9 +1,7 @@
 require "okyakusan/version"
 require "okyakusan/client"
 require "uri"
-require "netrc"
 require "net/http"
-require "json"
 
 module Okyakusan
   def self.start(base = "https://api.heroku.com")
