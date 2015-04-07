@@ -5,7 +5,7 @@ require "artifice"
 
 RSpec.describe Okyakusan::Client do
   let(:http)     { Net::HTTP.start("example.com", "80") }
-  let(:client)   { Okyakusan::Client.new(http) }
+  let(:client)   { Okyakusan::Client.new(http, false) }
   let(:app)      { "dodging-samurai-42" }
 
   before do

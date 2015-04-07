@@ -4,8 +4,9 @@ require "json"
 
 module Okyakusan
   class Client
-    def initialize(http)
+    def initialize(http, sudo)
       @http     = http
+      @sudo     = sudo
       netrc     = Netrc.read
       @username = netrc["api.heroku.com"].first
       @password = netrc["api.heroku.com"].last
@@ -37,8 +38,9 @@ module Okyakusan
       version ||= "3"
 
       request.basic_auth(@username, @password)
-      request.content_type = "application/json"
-      request["Accept"]    = "application/vnd.heroku+json; version=#{version}"
+      request.content_type     = "application/json"
+      request["Accept"]        = "application/vnd.heroku+json; version=#{version}"
+      request["X-Heroku-Sudo"] = "true" if @sudo
       request
     end
   end
