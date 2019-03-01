@@ -22,7 +22,7 @@ module Okyakusan
       end
     end
 
-    %w(post patch).each do |method_name|
+    %w(post put patch).each do |method_name|
       define_method(method_name) do |path, data: nil, version: nil|
         klass   = Net::HTTP.const_get(method_name.capitalize)
         request = klass.new(path)
